@@ -7,8 +7,6 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
-
-	"github.com/go-courier/envconf"
 )
 
 func EnvVarInDocker(key string) string {
@@ -34,7 +32,7 @@ type Dockerfile struct {
 }
 
 func (d *Dockerfile) String() string {
-	return ParseEnvVars(GetDockerfileTemplate(*d), envconf.EnvVarsFromEnviron(os.Environ()))
+	return ParseEnvVars(GetDockerfileTemplate(*d), EnvVarsFromEnviron(os.Environ()))
 }
 
 func (d Dockerfile) AddContent(from string, to string) *Dockerfile {

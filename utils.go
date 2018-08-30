@@ -2,13 +2,23 @@ package docker
 
 import (
 	"regexp"
-
-	"github.com/go-courier/envconf"
+	"strings"
 )
 
 var reEnvVar = regexp.MustCompile("(\\$?\\$)\\{?([A-Z0-9_]+)\\}?")
 
-func ParseEnvVars(s string, envVars *envconf.EnvVars) string {
+func EnvVarsFromEnviron(environ []string) map[string]string {
+	m := map[string]string{}
+	for _, kv := range environ {
+		kvParts := strings.Split(kv, "=")
+		if len(kvParts) == 2 {
+			m[kvParts[0]] = kvParts[1]
+		}
+	}
+	return m
+}
+
+func ParseEnvVars(s string, envVars map[string]string) string {
 	result := reEnvVar.ReplaceAllStringFunc(s, func(str string) string {
 		matched := reEnvVar.FindAllStringSubmatch(str, -1)[0]
 
@@ -17,7 +27,7 @@ func ParseEnvVars(s string, envVars *envconf.EnvVars) string {
 			return "${" + matched[2] + "}"
 		}
 
-		if value := envVars.Get(matched[2]); value != "" {
+		if value, ok := envVars[matched[2]]; ok {
 			return value
 		}
 
