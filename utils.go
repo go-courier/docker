@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-var reEnvVar = regexp.MustCompile("(\\$?\\$)\\{?([A-Z0-9_]+)\\}?")
+var reEnvVar = regexp.MustCompile("(\\$?\\$)\\{?([A-Za-z0-9_]+)\\}?")
 
 func EnvVarsFromEnviron(environ []string) map[string]string {
 	m := map[string]string{}
