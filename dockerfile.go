@@ -21,10 +21,10 @@ type Dockerfile struct {
 	From       string            `docker:"FROM" yaml:"from,omitempty"`
 	Image      string            `yaml:"image"`
 	Label      map[string]string `docker:"LABEL,multi" yaml:"label,omitempty"`
-	Run        string            `docker:"RUN,inline" yaml:"run,omitempty"`
 	WorkDir    string            `docker:"WORKDIR" yaml:"workdir,omitempty"`
 	Env        map[string]string `docker:"ENV,multi" yaml:"env,omitempty"`
 	Add        map[string]string `docker:"ADD,join" yaml:"add,omitempty"`
+	Run        string            `docker:"RUN,inline" yaml:"run,omitempty"`
 	Expose     []string          `docker:"EXPOSE" yaml:"expose,omitempty"`
 	Volume     []string          `docker:"VOLUME,array" yaml:"volume,omitempty"`
 	Cmd        []string          `docker:"CMD,array" yaml:"cmd,omitempty"`
